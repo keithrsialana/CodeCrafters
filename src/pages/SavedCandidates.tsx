@@ -1,16 +1,16 @@
-import { useContext,useEffect } from "react";
+import { useContext, useEffect } from "react";
 import CandidateContext from "../context/SavedContext";
 import Candidate from "../interfaces/Candidate.interface";
 
 const SavedCandidates = () => {
-  // context setup
-  const context = useContext(CandidateContext);
-  if (!context) {
-    throw new Error("CandidateList must be used within a CandidateProvider");
-  }
-  const { candidates, setCandidates } = context;
+	// context setup
+	const context = useContext(CandidateContext);
+	if (!context) {
+		throw new Error("CandidateList must be used within a CandidateProvider");
+	}
+	const { candidates, setCandidates } = context;
 
-  //every time candidates gets set, update localStorage
+	//every time candidates gets set, update localStorage
 	useEffect(() => {
 		const storage: string | null = localStorage.getItem("users");
 		if (storage) {
@@ -20,14 +20,17 @@ const SavedCandidates = () => {
 				localStorage.setItem("users", JSON.stringify(candidates));
 			else if (storageArray.length > 0 && candidates.length === 0)
 				setCandidates(storageArray as Candidate[]);
-			else
-				localStorage.setItem("users", JSON.stringify(candidates));
+			else localStorage.setItem("users", JSON.stringify(candidates));
+		} else if (!storage && candidates.length > 0) {
+			localStorage.setItem("users", JSON.stringify(candidates));
 		}
-	}, [candidates]); 
+	}, [candidates]);
 
-  async function handleReject(user:Candidate){
-    setCandidates(candidates.filter((userObj: Candidate) => userObj.id !== user.id));
-  }
+	async function handleReject(user: Candidate) {
+		setCandidates(
+			candidates.filter((userObj: Candidate) => userObj.id !== user.id)
+		);
+	}
 	return (
 		<div className="text-center text-white">
 			<h1>Potential Candidates</h1>
@@ -53,18 +56,29 @@ const SavedCandidates = () => {
 											<img
 												src={user.avatar_url}
 												alt={`${user.login} profile picture`}
-                        style={{maxWidth:"40%"}}
+												style={{ maxWidth: "40%" }}
 											/>
 										</a>
 									</td>
 									<td>
-                    <a href={user.html_url}>{`${user.name ? user.name : ""} [${user.login}]`}</a>
+										<a href={user.html_url}>{`${user.name ? user.name : ""} [${
+											user.login
+										}]`}</a>
 									</td>
 									<td>{user.location}</td>
-									<td><a href={`mailto:${user.email}`}>{user.email}</a></td>
+									<td>
+										<a href={`mailto:${user.email}`}>{user.email}</a>
+									</td>
 									<td>{user.company}</td>
 									<td>{user.bio}</td>
-									<td><button className="rejectButton" onClick={() => handleReject(user)}>X</button></td>
+									<td>
+										<button
+											className="rejectButton"
+											onClick={() => handleReject(user)}
+										>
+											X
+										</button>
+									</td>
 								</tr>
 							);
 						})}

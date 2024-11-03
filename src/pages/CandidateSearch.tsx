@@ -32,6 +32,8 @@ const CandidateSearch: React.FC = () => {
 			else if (storageArray.length > 0 && candidates.length === 0)
 				setCandidates(storageArray as Candidate[]);
 			else localStorage.setItem("users", JSON.stringify(candidates));
+		} else if (!storage && candidates.length > 0) {
+			localStorage.setItem("users", JSON.stringify(candidates));
 		}
 	}, [candidates]);
 
