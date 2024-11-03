@@ -1,0 +1,44 @@
+.btn-start-search {
+	border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	background: #0e73ff;
+	font-weight: bold;
+	height: 50px;
+	font-size: 2em;
+}
+.btn-start-search:hover {
+	background: #0a5ed3;
+	cursor: grab;
+}
+.deny-button,
+.accept-button {
+	font-weight: bold;
+	height: 80px;
+	font-size: 2em;
+	cursor: grab;
+}
+
+.deny-button {
+	border-radius: 0px 200px 200px 200px;
+	-webkit-border-radius: 0px 200px 200px 200px;
+	-moz-border-radius: 0px 200px 200px 200px;
+	background: #de2222;
+	border: 15px outset #ff5c4e;
+}
+
+.deny-button:hover {
+	border: 15px inset #ff5c4e;
+}
+
+.accept-button {
+	border-radius: 200px 0px 200px 200px;
+	-webkit-border-radius: 200px 0px 200px 200px;
+	-moz-border-radius: 200px 0px 200px 200px;
+	background: #22de64;
+	border: 15px outset #4eff79;
+}
+
+.accept-button:hover {
+	border: 15px inset #4eff79;
+}
