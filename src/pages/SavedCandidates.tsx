@@ -27,14 +27,21 @@ const SavedCandidates = () => {
 	}, [candidates]);
 
 	async function handleReject(user: Candidate) {
-		setCandidates(
-			candidates.filter((userObj: Candidate) => userObj.id !== user.id)
-		);
+		let newList: Candidate[] = [] as Candidate[];
+		if (candidates.length > 1) {
+			newList = candidates.filter(
+				(userObj: Candidate) => userObj.id !== user.id
+			);
+      setCandidates(newList);
+		} else {
+      setCandidates([] as Candidate[]);
+      localStorage.removeItem('users');
+    }
 	}
 	return (
 		<div className="text-center text-white">
 			<h1>Potential Candidates</h1>
-			{candidates ? (
+			{candidates.length > 0 ? (
 				<table className="table table-dark table-striped container">
 					<thead>
 						<tr>
@@ -76,7 +83,7 @@ const SavedCandidates = () => {
 											className="rejectButton"
 											onClick={() => handleReject(user)}
 										>
-											X
+											-
 										</button>
 									</td>
 								</tr>

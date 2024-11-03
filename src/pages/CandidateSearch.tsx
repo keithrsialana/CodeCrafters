@@ -77,10 +77,10 @@ const CandidateSearch: React.FC = () => {
 			<div className="container-fluid text-center justify-content-center">
 				<div className="row">
 					<div className="deny-button col" onClick={handleDeny}>
-						Deny
+						-
 					</div>
 					<div className="accept-button col" onClick={handleAccept}>
-						Accept
+						+
 					</div>
 				</div>
 			</div>
