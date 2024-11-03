@@ -15,9 +15,10 @@ const SavedCandidates = () => {
 		const storage: string | null = localStorage.getItem("users");
 		if (storage) {
 			const storageArray = JSON.parse(storage);
-			// if users exist in localStorage, reset candidates
+			// if users exist in candidates, reset localStorage
 			if (storageArray.length === 0 && candidates.length > 0)
 				localStorage.setItem("users", JSON.stringify(candidates));
+			// if users exist in localStorage, reset candidates
 			else if (storageArray.length > 0 && candidates.length === 0)
 				setCandidates(storageArray as Candidate[]);
 			else localStorage.setItem("users", JSON.stringify(candidates));
@@ -28,12 +29,14 @@ const SavedCandidates = () => {
 
 	async function handleReject(user: Candidate) {
 		let newList: Candidate[] = [] as Candidate[];
+    // if there's more than one person in candidates, subtract
 		if (candidates.length > 1) {
 			newList = candidates.filter(
 				(userObj: Candidate) => userObj.id !== user.id
 			);
       setCandidates(newList);
 		} else {
+      // if there's only 1, empty the list and clear localStorage
       setCandidates([] as Candidate[]);
       localStorage.removeItem('users');
     }

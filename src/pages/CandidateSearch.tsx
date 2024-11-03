@@ -16,7 +16,7 @@ const CandidateSearch: React.FC = () => {
 	}
 	const { candidates, setCandidates } = context;
 
-	// runs one time
+	// runs one time to load the first user
 	useEffect(() => {
 		if (!user.id) getNewUser();
 	});
@@ -26,9 +26,10 @@ const CandidateSearch: React.FC = () => {
 		const storage: string | null = localStorage.getItem("users");
 		if (storage) {
 			const storageArray = JSON.parse(storage);
-			// if users exist in localStorage, reset candidates
+			// if users exist in candidates, reset localStorage
 			if (storageArray.length === 0 && candidates.length > 0)
 				localStorage.setItem("users", JSON.stringify(candidates));
+			// if users exist in localStorage, reset candidates
 			else if (storageArray.length > 0 && candidates.length === 0)
 				setCandidates(storageArray as Candidate[]);
 			else localStorage.setItem("users", JSON.stringify(candidates));
