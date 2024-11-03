@@ -1,6 +1,5 @@
 const User = (props: any) => {
 	const { user } = props;
-	// console.log(`User.tsx user: ${JSON.stringify(user)}`);
 	return (
 		<div className="card bg-black text-white pt-3" style={{maxWidth:"100%",}}>
 			<img

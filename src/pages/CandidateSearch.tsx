@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { searchGithub, searchGithubUser } from "../api/API";
 import { useContext } from "react";
 import User from "../components/User";
@@ -15,7 +15,26 @@ const CandidateSearch: React.FC = () => {
 		throw new Error("CandidateList must be used within a CandidateProvider");
 	}
 	const { candidates, setCandidates } = context;
-	// console.log(candidates);
+
+	// runs one time
+	useEffect(() => {
+		if (!user.id) getNewUser();
+	});
+
+	//every time candidates gets set, update localStorage
+	useEffect(() => {
+		const storage: string | null = localStorage.getItem("users");
+		if (storage) {
+			const storageArray = JSON.parse(storage);
+			console.log(storageArray);
+			// if users exist in localStorage, reset candidates
+			if (storageArray.length === 0 && candidates.length > 0)
+				localStorage.setItem("users", JSON.stringify(candidates));
+			else if (storageArray.length > 0 && candidates.length === 0)
+				setCandidates(storageArray as Candidate[]);
+			else localStorage.setItem("users", JSON.stringify(candidates));
+		}
+	}, [candidates]);
 
 	async function handleAccept() {
 		// adds the accepted user to the candidate list context
@@ -28,10 +47,11 @@ const CandidateSearch: React.FC = () => {
 	async function getNewUser() {
 		// gets a list of users from github
 		const userList = await searchGithub();
-		
+
 		// picks a random user from the list
-		let pickedUser = userList[Math.floor(Math.random() * userList.length - 1) - 1];
-		if (!pickedUser){
+		let pickedUser =
+			userList[Math.floor(Math.random() * userList.length - 1) - 1];
+		if (!pickedUser) {
 			getNewUser();
 			return;
 		}
@@ -48,30 +68,20 @@ const CandidateSearch: React.FC = () => {
 		}
 	}
 	return (
-		<div className="text-center" style={{maxWidth:"60%"}}>
+		<div className="text-center" style={{ maxWidth: "60%" }}>
 			<h1>CandidateSearch</h1>
 			<div className="row justify-content-center text-start">
-				{user.id ? (
-					<User user={user} />
-				) : (
-					<div className="btn-start-search text-center" onClick={getNewUser}>
-						Start Search!
-					</div>
-				)}
+				<User user={user} />
 			</div>
 			<div className="container-fluid text-center justify-content-center">
-				{user.id ? (
-					<div className="row">
-						<div className="deny-button col" onClick={handleDeny}>
-							Deny
-						</div>
-						<div className="accept-button col" onClick={handleAccept}>
-							Accept
-						</div>
+				<div className="row">
+					<div className="deny-button col" onClick={handleDeny}>
+						Deny
 					</div>
-				) : (
-					<div></div>
-				)}
+					<div className="accept-button col" onClick={handleAccept}>
+						Accept
+					</div>
+				</div>
 			</div>
 		</div>
 	);

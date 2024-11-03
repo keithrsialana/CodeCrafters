@@ -1,3 +1,11 @@
+.rejectButton {
+	border-radius: 99%;
+	-webkit-border-radius: 99%;
+	-moz-border-radius: 99%;
+	background: #d41212;
+	color: white;
+	font-weight: bold;
+}
 .btn-start-search {
 	border-radius: 10px 10px 10px 10px;
 	-webkit-border-radius: 10px 10px 10px 10px;
@@ -9,14 +17,14 @@
 }
 .btn-start-search:hover {
 	background: #0a5ed3;
-	cursor: grab;
+	cursor: pointer;
 }
 .deny-button,
 .accept-button {
 	font-weight: bold;
 	height: 80px;
 	font-size: 2em;
-	cursor: grab;
+	cursor: pointer;
 }
 
 .deny-button {
