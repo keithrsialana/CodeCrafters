@@ -15,7 +15,6 @@ const SavedCandidates = () => {
 		const storage: string | null = localStorage.getItem("users");
 		if (storage) {
 			const storageArray = JSON.parse(storage);
-			console.log(storageArray);
 			// if users exist in localStorage, reset candidates
 			if (storageArray.length === 0 && candidates.length > 0)
 				localStorage.setItem("users", JSON.stringify(candidates));
