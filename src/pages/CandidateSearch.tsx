@@ -52,7 +52,7 @@ const CandidateSearch: React.FC = () => {
 
 		// picks a random user from the list
 		let pickedUser =
-			userList[Math.floor(Math.random() * userList.length - 1) - 1];
+			userList[Math.floor(Math.random() * userList.length - 1)];
 		if (!pickedUser) {
 			getNewUser();
 			return;
